@@ -4,3 +4,5 @@
 *.iml
 venv/
 __pycache__/
+project/credentials.db-journal
+project/credentials.db
