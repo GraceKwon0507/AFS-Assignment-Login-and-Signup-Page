@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./index.css";
-import login from "./Login";
-
+import Login from "./Login";
+import { Link } from 'react-router-dom';
 
 
 export default function App() {
   
   const [values, setValues] = useState({
-    firtName:"",
+    firstName:"",
     lastName:"",
     email:""
   });
@@ -16,7 +16,7 @@ export default function App() {
   const [valid, setValid] = useState(false);
 
   const handleFirstNameInputChange = (event) =>{
-    setValues({...values, firtName: event.target.value})
+    setValues({...values, firstName: event.target.value})
   }
 
   const handlelastNameInputChange = (event) =>{
@@ -29,68 +29,64 @@ export default function App() {
 
   const handleSubmit = (event)=>{
     event.preventDefault();
-    if(values.firtName && values.lastName && values.email){
+    if(values.firstName && values.lastName && values.email){
       setValid(true);
     }
     setSubmitted(true);
   } 
 
   const handleClick = (event)=>{
-    window.location.href="/login.js";
+    window.location.href="/login";
     //this opens in a new tab (believe that is what the owner of the question wanted if not you can do window.location.href = "/insert/your/path/here". 
   }
 
 
   return (
-    <div class="form-container">
-      <form class="register-form" onSubmit={handleSubmit}>        
-        {submitted && valid? <div class="success-message">Success! Thank you for registering</div>: null}
+    <div className="form-container">
+      <form className="register-form" onSubmit={handleSubmit}>
+        {submitted && valid? <div className="success-message">Success! Thank you for registering</div>: null}
         <input
           onChange={handleFirstNameInputChange}
-          value={values.firtName}
+          value={values.firstName}
           id="first-name"
-          class="form-field"
+          className="form-field"
           type="text"
           placeholder="First Name"
           name="firstName"
-        />        
-        {submitted && !values.firtName ? <span id="first-name-error">Please enter a first name</span>: null}
+        />
+        {submitted && !values.firstName ? <span id="first-name-error">Please enter a first name</span>: null}
 
         <input
           onChange={handlelastNameInputChange}
           values={values.lastName}
           id="last-name"
-          class="form-field"
+          className="form-field"
           type="text"
           placeholder="Last Name"
           name="lastName"
-        />        
+        />
         {submitted && !values.lastName ? <span id="last-name-error">Please enter a last name</span> : null}
 
         <input
           onChange={handleemailInputChange}
           value={values.email}
           id="email"
-          class="form-field"
+          className="form-field"
           type="text"
           placeholder="Email"
           name="email"
-        />        
+        />
         {submitted && !values.email ? <span id="email-error">Please enter an email address</span> : null}
 
-        <button class="form-field" type="submit">
+        <button className="form-field" type="submit">
           Register
         </button>
 
-        
-        <button 
-        class="form-field"
-        type="submit"
-        onClick={handleClick}        
-        >
+
+        <button className="form-field" type="submit" onClick={handleClick}>
           Login
-          </button>
-       
+        </button>
+
       </form>
     </div>
   );
