@@ -18,25 +18,16 @@ def create_table():
     db.create_all()
 
 
-@app.route('/blogs')
-@login_required
-def blog():
-    return render_template('blog.html')
-
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if current_user.is_authenticated:
-        return redirect('/blogs')
-
     if request.method == 'POST':
         email = request.form['email']
         user = UserModel.query.filter_by(email=email).first()
-        if user is not None and user.check_password(request.form['password']):
+        if user is not None:
             login_user(user)
-            return redirect('/blogs')
+#            return redirect('/blogs')
 
-    return render_template('login.html')
+#    return render_template('login.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -45,19 +36,18 @@ def register():
         return redirect('/blogs')
 
     if request.method == 'POST':
-        email = request.form['email']
-        username = request.form['username']
-        password = request.form['password']
+        email = request.args.get('email', None)
+        firstName = request.args.get('firstName', None)
+        lastName = request.args.get('lastName', None)
 
         if UserModel.query.filter_by(email=email).first():
             return 'Email already present'
 
-        user = UserModel(email=email, username=username)
-        user.set_password(password)
+        user = UserModel(email=email, firstName=firstName, lastName=lastName)
         db.session.add(user)
         db.session.commit()
         return redirect('/login')
-    return render_template('register.html')
+#    return render_template('register.html')
 
 
 @app.route('/logout')
